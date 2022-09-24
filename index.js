@@ -16,5 +16,38 @@
 // WHEN I decide to finish building my team
 // THEN I exit the application, and the HTML is generated
 // write the classes: employee, manager, intern
-// write the command line app that collects the info 
+// write the command line app that collects the info
 // write some code that, based on the info collected from command line, generates an HTML file
+
+const inquirer = require("inquirer");
+const fs = require("fs");
+
+inquirer.prompt([
+  {
+    type: "input",
+    message: "Employee Name:",
+    // should this be Team Manager instead?
+    name: "name",
+  },
+  {
+    type: "input",
+    message: "Employee ID",
+    name: "id",
+  },
+  {
+    type: "input",
+    message: "Employee Email",
+    name: "email",
+  },
+  {
+    type: "input",
+    message: "Employee Office Number",
+    name: "office number",
+  },
+  {
+    type: "list",
+    message: "Employee Role",
+    choices: ["Engineer, Intern, Manager"],
+    name: "role",
+  },
+]);
