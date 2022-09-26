@@ -139,27 +139,6 @@ function stop() {
 
    // Create the html for the web page
   let html = genHtml(employees);
-
-  // Save that html to a file in the dist folder...
-  /*
-
-  const filename = "input.txt"; // Need to update with your correct path '../dist/filename...'
-   
-fs.open(filename, "w", (err, fd)=>{
-    if(err){
-        console.log(err.message);
-    }else{
-        fs.write(fd, HTML, (err, bytes)=>{
-            if(err){
-                console.log(err.message);
-            }else{
-                console.log(bytes +' bytes written');
-            }
-        })        
-    }
-})
-*/
-
   
 }
 const genHtml= function(employees) {
@@ -218,9 +197,7 @@ for (let e of employees) {
 </div>
 */
 
-HTML += `
-</body>
-</html>`;
+
 
 return HTML;
 
