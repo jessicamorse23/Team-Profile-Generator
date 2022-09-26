@@ -24,8 +24,7 @@ const fs = require("fs");
 const Manager = require("../lib/Manager");
 const Intern = require("../lib/Intern");
 const Engineer = require("../lib/Engineer");
-const employees = [];
-let stopLoop = false;
+let employees = [];
 
 inquirer
   .prompt([
@@ -52,33 +51,38 @@ inquirer
   ])
   .then((answers) => {
     const manager = new Manager(answers.name, answers.id, answers.email, answers.officeNumber);
-    employees.push(manager);
-    while (stopLoop === false) {
-      inquirer
-        .prompt([
-          {
-            type: "list",
-            message: "Do you want to add an Intern or Engineer or stop?",
-            name: "choice",
-            choices: ["Intern", "Engineer", "stop"],
-          },
-        ])
-        .then((answers) => {
-          if (answers.choice === "Intern") {
-            askForIntern();
-          } else if (answers.choice === "Engineer") {
-            askForEngineer();
-          } else if (answers.choice === "stop") {
-            stop();
-          }
-        });
-    }
+    employees.push(manager); 
+    addNewMember();
   });
 
+ function addNewMember() {
+ inquirer
+  .prompt([
+    {
+      type: "list",
+      message: "Do you want to add an Intern or Engineer or stop?",
+      name: "choice",
+      choices: ["Intern", "Engineer", "stop"],
+    },
+  ])
+  .then((answers) => {
+    if (answers.choice === "Intern") {
+      askForIntern();
+    } else if (answers.choice === "Engineer") {
+      askForEngineer();
+    } else if (answers.choice === "stop") {
+      stop();
+    }
+  });
+ }
 function askForIntern() {
   inquirer
     .prompt([
-      { type: "input", message: "Intern Name:", name: "name" },
+      { 
+      type: "input", 
+      message: "Intern Name:", 
+      name: "name" 
+    },
       {
         type: "input",
         message: "Intern ID",
@@ -99,6 +103,8 @@ function askForIntern() {
       const intern = new Intern(answers.name, answers.id, answers.email, answers.school);
       employees.push(intern);
       console.log(employees);
+      addNewMember();
+
     });
 }
 
@@ -125,9 +131,98 @@ function askForEngineer() {
     .then((answers) => {
       const engineer = new Engineer(answers.name, answers.id, answers.email, answers.github);
       employees.push(engineer);
+      addNewMember();
     });
 }
 function stop() {
-  stopLoop = true
   console.log("stop");
+
+   // Create the html for the web page
+  let html = genHtml(employees);
+
+  // Save that html to a file in the dist folder...
+  /*
+
+  const filename = "input.txt"; // Need to update with your correct path '../dist/filename...'
+   
+fs.open(filename, "w", (err, fd)=>{
+    if(err){
+        console.log(err.message);
+    }else{
+        fs.write(fd, HTML, (err, bytes)=>{
+            if(err){
+                console.log(err.message);
+            }else{
+                console.log(bytes +' bytes written');
+            }
+        })        
+    }
+})
+*/
+
+  
 }
+const genHtml= function(employees) {
+  let HTML= `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+</head>
+<body>
+<div class="jumbotron">
+<h1 class="display-4">My Team</h1>
+</div>`;
+
+// The number of cards is not known in advance.
+// Loop through the employee area and create html cards for each
+
+for (let e of employees) {
+  HTML += e.getCard();
+
+}
+/*
+<div class="row row-cols-1 row-cols-md-3">
+<div class="col mb-4">
+  <div class="card h-100">
+    <div class="card-body">
+      <h5 class="card-title">Card title</h5>
+    </div>
+  </div>
+</div>
+<div class="col mb-4">
+  <div class="card h-100">
+    <div class="card-body">
+      <h5 class="card-title">Card title</h5>
+    </div>
+  </div>
+</div>
+<div class="col mb-4">
+  <div class="card h-100">
+    <div class="card-body">
+      <h5 class="card-title">Card title</h5>
+    </div>
+  </div>
+</div>
+<div class="col mb-4">
+  <div class="card h-100">
+    <div class="card-body">
+      <h5 class="card-title">Card title</h5>
+    </div>
+  </div>
+</div>
+</div>
+*/
+
+HTML += `
+</body>
+</html>`;
+
+return HTML;
+
+}
+
