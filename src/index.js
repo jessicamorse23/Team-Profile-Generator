@@ -51,38 +51,38 @@ inquirer
   ])
   .then((answers) => {
     const manager = new Manager(answers.name, answers.id, answers.email, answers.officeNumber);
-    employees.push(manager); 
+    employees.push(manager);
     addNewMember();
   });
 
- function addNewMember() {
- inquirer
-  .prompt([
-    {
-      type: "list",
-      message: "Do you want to add an Intern or Engineer or stop?",
-      name: "choice",
-      choices: ["Intern", "Engineer", "stop"],
-    },
-  ])
-  .then((answers) => {
-    if (answers.choice === "Intern") {
-      askForIntern();
-    } else if (answers.choice === "Engineer") {
-      askForEngineer();
-    } else if (answers.choice === "stop") {
-      stop();
-    }
-  });
- }
+function addNewMember() {
+  inquirer
+    .prompt([
+      {
+        type: "list",
+        message: "Do you want to add an Intern or Engineer or stop?",
+        name: "choice",
+        choices: ["Intern", "Engineer", "stop"],
+      },
+    ])
+    .then((answers) => {
+      if (answers.choice === "Intern") {
+        askForIntern();
+      } else if (answers.choice === "Engineer") {
+        askForEngineer();
+      } else if (answers.choice === "stop") {
+        stop();
+      }
+    });
+}
 function askForIntern() {
   inquirer
     .prompt([
-      { 
-      type: "input", 
-      message: "Intern Name:", 
-      name: "name" 
-    },
+      {
+        type: "input",
+        message: "Intern Name:",
+        name: "name",
+      },
       {
         type: "input",
         message: "Intern ID",
@@ -104,7 +104,6 @@ function askForIntern() {
       employees.push(intern);
       console.log(employees);
       addNewMember();
-
     });
 }
 
@@ -137,12 +136,11 @@ function askForEngineer() {
 function stop() {
   console.log("stop");
 
-   // Create the html for the web page
+  // Create the html for the web page
   let html = genHtml(employees);
-  
 }
-const genHtml= function(employees) {
-  let HTML= `
+function readytoRender() {
+  let HTML = `
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -156,50 +154,8 @@ const genHtml= function(employees) {
 <div class="jumbotron">
 <h1 class="display-4">My Team</h1>
 </div>`;
-
-// The number of cards is not known in advance.
-// Loop through the employee area and create html cards for each
-
 for (let e of employees) {
-  HTML += e.getCard();
-
+  HTML += e.renderCard();
 }
-/*
-<div class="row row-cols-1 row-cols-md-3">
-<div class="col mb-4">
-  <div class="card h-100">
-    <div class="card-body">
-      <h5 class="card-title">Card title</h5>
-    </div>
-  </div>
-</div>
-<div class="col mb-4">
-  <div class="card h-100">
-    <div class="card-body">
-      <h5 class="card-title">Card title</h5>
-    </div>
-  </div>
-</div>
-<div class="col mb-4">
-  <div class="card h-100">
-    <div class="card-body">
-      <h5 class="card-title">Card title</h5>
-    </div>
-  </div>
-</div>
-<div class="col mb-4">
-  <div class="card h-100">
-    <div class="card-body">
-      <h5 class="card-title">Card title</h5>
-    </div>
-  </div>
-</div>
-</div>
-*/
-
-
-
 return HTML;
-
-}
-
+};

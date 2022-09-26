@@ -1,3 +1,5 @@
+// Manager.test.js file received from instructional staff
+
 const Manager = require("../lib/Manager");
 const Employee = require("../lib/Employee");
 
