@@ -135,10 +135,13 @@ function askForEngineer() {
 }
 function stop() {
   console.log("stop");
+  const HTMLcontent = readytoRender(employees);
+  console.log(HTMLcontent); 
+  }
 
   // Create the html for the web page
   // let html = genHtml(employees);
-}
+
 function readytoRender() {
   let HTML = `
 <!DOCTYPE html>
