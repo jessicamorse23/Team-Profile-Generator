@@ -137,7 +137,7 @@ function stop() {
   console.log("stop");
 
   // Create the html for the web page
-  let html = genHtml(employees);
+  // let html = genHtml(employees);
 }
 function readytoRender() {
   let HTML = `
@@ -153,7 +153,13 @@ function readytoRender() {
 <body>
 <div class="jumbotron">
 <h1 class="display-4">My Team</h1>
-</div>`;
+<div class="container">
+<div class="row">
+</div>
+</div>
+</div>
+</body>`;
+
 for (let e of employees) {
   HTML += e.renderCard();
 }
