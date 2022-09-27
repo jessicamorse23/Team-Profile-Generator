@@ -24,8 +24,60 @@ const fs = require("fs");
 const Manager = require("../lib/Manager");
 const Intern = require("../lib/Intern");
 const Engineer = require("../lib/Engineer");
+const genHtml = require("./genHTML");
 let employees = [];
 
+function runApp() {
+  function createTeam () {
+  function addNewMember() {
+  inquirer
+    .prompt([
+      {
+        type: "list",
+        message: "Do you want to add a Manager, Intern or Engineer or stop adding new members?",
+        name: "choice",
+        choices: ["Intern", "Engineer", "stop"],
+      },
+    ])
+    .then((answers) => {
+      if (answers.choice === "Intern") {
+        askForIntern();
+      } else if (answers.choice === "Engineer") {
+        askForEngineer();
+      } else if (answers.choice === "stop") {
+        stop();
+      }
+    });
+}
+
+  // function createTeam() {
+  //   inquirer.prompt([
+  //     {
+  //       type: "list",
+  //       message: "What type of employee are you adding to your team?",
+  //       name: "addEmployee",
+  //       choices: ["Manager", "Engineer", "Intern", "I'm finished"],
+  //     },
+  //   ]);
+  //   then(function (userInput) {
+  //     switch (userInput.addEmployeePrompt) {
+  //       case "Manager":
+  //         addManager();
+  //         break;
+  //       case "Engineer":
+  //         addEngineer();
+  //         break;
+  //       case "Intern":
+  //         addIntern();
+  //         break;
+
+  //       default:
+  //         generateHTML();
+  //     }
+  //   });
+  // }
+
+function addManager () {
 inquirer
   .prompt([
     {
@@ -54,27 +106,8 @@ inquirer
     employees.push(manager);
     addNewMember();
   });
-
-function addNewMember() {
-  inquirer
-    .prompt([
-      {
-        type: "list",
-        message: "Do you want to add an Intern or Engineer or stop?",
-        name: "choice",
-        choices: ["Intern", "Engineer", "stop"],
-      },
-    ])
-    .then((answers) => {
-      if (answers.choice === "Intern") {
-        askForIntern();
-      } else if (answers.choice === "Engineer") {
-        askForEngineer();
-      } else if (answers.choice === "stop") {
-        stop();
-      }
-    });
 }
+
 function askForIntern() {
   inquirer
     .prompt([
@@ -133,38 +166,48 @@ function askForEngineer() {
       addNewMember();
     });
 }
+}
 function stop() {
   console.log("stop");
-  const HTMLcontent = readytoRender(employees);
-  console.log(HTMLcontent); 
-  }
-
-  // Create the html for the web page
-  // let html = genHtml(employees);
-
-function readytoRender() {
-  let HTML = `
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
-</head>
-<body>
-<div class="jumbotron">
-<h1 class="display-4">My Team</h1>
-<div class="container">
-<div class="row">
-</div>
-</div>
-</div>
-</body>`;
-
-for (let e of employees) {
-  HTML += e.renderCard();
+  const htmlContent = readytoRender(employees);
+  console.log(htmlContent);
+  fs.writeFileSync(outputPath, generateTeam(employees), "UTF-8")
 }
-return HTML;
-};
+
+createTeam()
+}
+runApp();
+
+// fs.writeFile('index.html', htmlContent, (err) =>
+// err ? console.log(err) : console.log('created HTML')
+// );
+
+// Create the html for the web page
+// let html = genHtml(employees);
+
+// function readytoRender() {
+//   let HTML = `
+// <!DOCTYPE html>
+// <html lang="en">
+// <head>
+//   <meta charset="UTF-8">
+//   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+//   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+//   <title>Document</title>
+//   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+// </head>
+// <body>
+// <div class="jumbotron">
+// <h1 class="display-4">My Team</h1>
+// <div class="container">
+// <div class="row">
+// </div>
+// </div>
+// </div>
+// </body>`;
+
+//   for (let e of employees) {
+//     HTML += e.renderCard();
+//   }
+//   return HTML;
+// }
