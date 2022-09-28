@@ -1,11 +1,10 @@
-const genHTML = generateTeamPage => {
-
-  const generateManager = manager => {
-    return `
+// card for manager
+const generateManagerCard = (manager) => {
+  return `
     <div class="card employee-card">
     <div class="card-header">
         <h2 class="card-title">${manager.getName()}</h2>
-        <h3 class="card-title"><i class="fas fa-mug-hot mr-2"></i>${manager.getRole()}</h3>
+        <h3 class="card-title"><i class="fa-regular fa-cup-togo"></i>${manager.getRole()}</h3>
     </div>
     <div class="card-body">
         <ul class="list-group">
@@ -16,14 +15,14 @@ const genHTML = generateTeamPage => {
     </div>
 </div>
     `;
-  };
-
-const generateEngineer = engineer => {
+};
+// card for engineer
+const generateEngineerCard = (engineer) => {
   return `
   <div class="card employee-card">
   <div class="card-header">
       <h2 class="card-title">${engineer.getName()}</h2>
-      <h3 class="card-title"><i class="fas fa-glasses mr-2"></i>${engineer.getRole()}</h3>
+      <h3 class="card-title"><i class="fa-solid fa-desktop"></i>${engineer.getRole()}</h3>
   </div>
   <div class="card-body">
       <ul class="list-group">
@@ -34,14 +33,14 @@ const generateEngineer = engineer => {
   </div>
 </div>
       `;
-  };
-
-  const generateIntern = intern => {
-    return `
+};
+// card for Intern
+const generateInternCard = (intern) => {
+  return `
     <div class="card employee-card">
 <div class="card-header">
     <h2 class="card-title">${intern.getName()}</h2>
-    <h3 class="card-title"><i class="fas fa-user-graduate mr-2"></i>${intern.getRole()}</h3>
+    <h3 class="card-title"><i class="fa-solid fa-notebook"></i>${intern.getRole()}</h3>
 </div>
 <div class="card-body">
     <ul class="list-group">
@@ -54,60 +53,73 @@ const generateEngineer = engineer => {
     `;
 };
 
-const html = [];
+genHTML = (data) => {
+  pageArray = [];
 
-html.push(employees
-  .filter(employee => employee.getRole() === "Manager")
-  .map(manager => generateManager(manager))
-  );
-  html.push(employees
-    .filter(employee => employee.getRole() === "Engineer")
-    .map(engineer => generateEngineer(engineer))
-    .join("")
-    );
-    html.push(employees
-      .filter(employee => employee.getRole() === "Intern")
-      .map(intern => generateIntern(intern))
-      .join("")
-      );
-      return html.join("");
-    }      
+  for (let i = 0; i < data.length; i++) {
+    const employee = data[i];
+    const role = employee.getRole();
 
-module.exports = generateTeamPage => {
+    if (role === "Manager") {
+      const managerCard = generateManagerCard(employee);
+
+      pageArray.push(managerCard);
+    }
+
+    if (role === "Engineer") {
+      const engineerCard = generateEngineerCard(employee);
+
+      pageArray.push(engineerCard);
+    }
+
+    if (role === "Intern") {
+      const internCard = generateInternCard(employee);
+
+      pageArray.push(internCard);
+    }
+  }
+
+  const employeeCards = pageArray.join("");
+
+  const generateTeam = generateTeamPage(employeeCards);
+  return generateTeam;
+};
+const generateTeamPage = function (employeeCards) {
   return `
-  <!DOCTYPE html>
-  <html lang="en">
-  <head>
-      <meta charset="UTF-8" />
-      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-      <title>My Team</title>
-      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-      <link rel="stylesheet" href="style.css">
-      <script src="https://kit.fontawesome.com/c502137733.js"></script>
-  </head>
-  <body>
-      <div class="container-fluid">
-          <div class="row">
-              <div class="col-12 jumbotron mb-3 team-heading">
-                  <h1 class="text-center">My Team</h1>
-              </div>
-          </div>
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Team Profile</title>
+        <script src="https://kit.fontawesome.com/c29c44467e.js" crossorigin="anonymous"></script>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@100;200;300&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+        <link rel="stylesheet" href="./dist/style.css">
+    </head>
+    
+    <body>
+        <<div class="jumbotron bg-info text-white">
+        <h1 class="display-4">My Team!</h1>
       </div>
-      <div class="container">
-          <div class="row">
-              <div class="team-area col-12 d-flex justify-content-center">
-                  ${generateTeamPage(team)}
+    
+        <main>
+        <div class="container">
+        <div class="d-flex p-2 bd-highlight">
+                  <div class="row justify-content-center">
+                  ${employeeCards}
+                  </div>
               </div>
-          </div>
-      </div>
-  </body>
-  </html>
-      `;
-  };
-  
-
-
-
-
+              </div>
+        </main>
+        
+    </body>
+    
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+    </html>
+  `;
+};
+module.exports = genHTML;
