@@ -1,10 +1,11 @@
 // card for manager
 const generateManagerCard = (manager) => {
   return `
-    <div class="card employee-card">
-    <div class="card-header">
+    <div class=" card text-center border-info employee-card" style="width: 18rem;">
+    <div class="card-header bg-success text-white">
         <h2 class="card-title">${manager.getName()}</h2>
-        <h3 class="card-title"><i class="fa-solid fa-mug-hot"></i></i>${manager.getRole()}</h3>
+        <h3><i class="fa-solid fa-mug-hot"></i></h3>
+        <h3 class="card-title">${manager.getRole()}</h3>
     </div>
     <div class="card-body">
         <ul class="list-group">
@@ -19,10 +20,11 @@ const generateManagerCard = (manager) => {
 // card for engineer
 const generateEngineerCard = (engineer) => {
   return `
-  <div class="card employee-card">
-  <div class="card-header">
+  <div class="card text-center border-info employee-card" style="width: 18rem;">
+  <div class="card-header bg-success text-white">
       <h2 class="card-title">${engineer.getName()}</h2>
-      <h3 class="card-title"><i class="fa-solid fa-desktop"></i>${engineer.getRole()}</h3>
+      <h3><i class="fa-solid fa-desktop"></i></h3>
+      <h3 class="card-title">${engineer.getRole()}</h3>
   </div>
   <div class="card-body">
       <ul class="list-group">
@@ -37,10 +39,11 @@ const generateEngineerCard = (engineer) => {
 // card for Intern
 const generateInternCard = (intern) => {
   return `
-    <div class="card employee-card">
-<div class="card-header">
+    <div class="card text-center border-info employee-card" style="width: 18rem;">
+<div class="card-header bg-success text-white">
     <h2 class="card-title">${intern.getName()}</h2>
-    <h3 class="card-title"><i class="fa-solid fa-book"></i>${intern.getRole()}</h3>
+    <h3><i class="fa-solid fa-book"></i>
+    <h3 class="card-title">${intern.getRole()}</h3>
 </div>
 <div class="card-body">
     <ul class="list-group">
@@ -100,14 +103,16 @@ const generateTeamPage = function (employeeCards) {
         <link rel="stylesheet" href="./dist/style.css">
     </head>
     <body>
-        <<div class="jumbotron bg-info text-white">
-        <h1 class="display-4">My Team!</h1>
+    <div class="jumbotron bg-info text-white">
+        <h1 class="display-4 text-center">My Team!</h1>
         </div>
         <div class="container">
         <div class="row justify-content-md-center">
+        <div class="card-deck">
     ${employeeCards}
     </div>
   </div> 
+  </div>
     </body>
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
