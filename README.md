@@ -7,7 +7,9 @@ The goal of this challenge was build a Node.js command-line application that tak
 clone the GitHub repo [TeamManagerRepo](https://github.com/jessicamorse23/Team-Profile-Generator)
 
 ## Usage
-Please refer to the video submission.
+![Team Profiles](./assets/Team%20Profiles.png)<br>
+![Command Line](./assets/Command%20Line.png)<br>
+![Tests](./assets/Test%20Pass.png)<br>
 
 ## Credits
 I received the test files from the instructional staff. 
